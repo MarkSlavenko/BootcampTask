@@ -26,3 +26,85 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+td, th {
+  padding: 5px;
+}
+
+th{
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  outline: 1px solid black;
+  border-bottom: 2px solid black;
+}
+
+table {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+th, th a {
+  font-size: 20px;
+  color: lightslategray;
+}
+
+
+a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.prev, .next {
+  position: fixed;
+  height:100%;
+  top: 0px;
+  width: 8%;
+  background-color: rgba(228,228,228,0.3);
+  border-radius: 0px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(228,228,228,0.7)
+}
+
+.prev span, .next span {
+  font-size: 35px;
+  margin-top: -220px;
+}
+
+
+
+.prev {
+  left: 0px;
+}
+
+.next {
+  right: 0px;
+}
+
+.test-input {
+  margin: 0 10px 0px 0;
+  width: 250px;
+  height: 30px;
+  padding-left: 5px;
+  border-radius: 4px;
+  border: 1px solid silver;
+}
+.btn-search {
+  width: 100px;
+  height: 30px;
+  padding: 5px 12px;
+  margin-right: 10px;
+}
+
+.total {
+  font-size: 19px;
+}
+
+.total span {
+  font-weight: bold;
+  color: #222222;
+}
