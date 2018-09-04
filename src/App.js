@@ -25,6 +25,7 @@ class App extends Component{
 
     clearButton = () => {
         this.props.clear()
+        this.input.current.value == ''
         this.setState({visibleBtn:false})
     }
 
