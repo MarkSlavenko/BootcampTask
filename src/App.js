@@ -11,11 +11,12 @@ class App extends Component{
     constructor(props) {
         super(props)
         this.input = React.createRef()
+        this.state = {
+            visibleBtn : false,
+        }
     }
 
-    state = {
-        visibleBtn : false,
-    }
+
 
 
     searchButton = () => {
@@ -25,7 +26,7 @@ class App extends Component{
 
     clearButton = () => {
         this.props.clear()
-        this.input.current.value == ''
+        this.input.current.value = ''
         this.setState({visibleBtn:false})
     }
 
