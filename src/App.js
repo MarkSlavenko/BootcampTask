@@ -4,7 +4,10 @@ import {Shows} from "./components/Shows/Shows";
 import shortid from 'shortid'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
-import { sortByValue, pageChange, searchByValue, clearPage } from './actions/PageActions'
+import { pageChange } from './actions/pageChange'
+import { searchByValue } from './actions/searchByValue'
+import { sortByValue } from './actions/sortByValue'
+import { clearPage } from './actions/clearPage'
 
 class App extends Component{
 
@@ -15,8 +18,6 @@ class App extends Component{
             visibleBtn : false,
         }
     }
-
-
 
 
     searchButton = () => {
