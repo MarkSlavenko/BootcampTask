@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { sortReducer } from './Sort'
 
 var shows;
 const take_param = (param) => {
