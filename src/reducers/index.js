@@ -33,7 +33,7 @@ request_movies()
 export const initialState = {
     shows: shows,
     shows_pagination: shows.slice(0,30),
-    clear_shows: shows,
+    clear_shows: shows.slice(),
     i:0,
 }
 
