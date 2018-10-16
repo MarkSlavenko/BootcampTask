@@ -38,7 +38,7 @@ class App extends Component{
     }
 
     componentDidMount() {
-        this.props.urlMaker('https://api.trakt.tv/shows/popular?extended=full&limit=10&genres=action', 'Action');
+        this.props.urlMaker('https://api.trakt.tv/shows/popular?extended=full&limit=30&genres=action', 'Action');
     }
 
     render() {
@@ -46,17 +46,17 @@ class App extends Component{
         const shows_pagination = this.props.shows_pagination
         const sort = this.props.sort
         const page = this.props.page
-        const i = this.props.i
+        const i = this.props.page
         let showsTemplate
         if (shows_pagination.length) {
             showsTemplate = shows_pagination.map((item, b) => {
 
                 return <Shows key={shortid.generate()}
-                              id={i+b+1} name={item.show.title}
-                              season={item.episode.season}
-                              number={item.episode.number}
-                              title={item.episode.title}
-                              year={item.show.year}/>})
+                              id={i*30+b-29} name={item.title}
+                              rating={item.rating}
+                              status={item.status}
+                              title={item.overview}
+                              year={item.year}/>})
         } else {
             showsTemplate = <th width="50%">Error. Shows is not present.</th>
         }
@@ -81,8 +81,8 @@ class App extends Component{
                         <tr>
                             <th width="5%">№</th>
                             <th width="30%">Name of the show</th>
-                            <th width="8%">Season</th>
-                            <th width="4%">Number</th>
+                            <th width="8%">Rating</th>
+                            <th width="6%">Status</th>
                             <th width="30%">Title</th>
                             <th width="7%">Year</th>
                         </tr>

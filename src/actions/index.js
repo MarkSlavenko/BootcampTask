@@ -75,9 +75,10 @@ export const setSort = sort => {
 }
 
 export const loadContent = (url) => {
+    console.log('red')
     return (dispatch, getState) => {
         dispatch(isLoading(true));
-        // if (getState().otherContent.nothingFound) dispatch(nothingFound(false))
+        if (getState().otherContent) dispatch(nothingFound(false))
         fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
@@ -106,35 +107,16 @@ export const loadContent = (url) => {
             })
             .then((data) => { // загрузка картинок
                 const content = [...data];
-                let i = 0;
-                data.map((item, index) => {
-                    fetch(`https://webservice.fanart.tv/v3/tv/${item.ids.tvdb}?api_key=408b22edfb0465364b031d789388adb3`)
-                        .then((image) => {
-                            image.json().then((imageUrl) => {
-                                const newItem = Object.assign({}, item);
-                                if (imageUrl.tvposter) { // Перебор большинства возможных значений нахождения Url картинки в JSON объекте
-                                    newItem.url = imageUrl.tvposter[0].url;
-                                } else if (imageUrl.clearlogo) {
-                                    newItem.url = imageUrl.clearlogo[0].url;
-                                } else if (imageUrl.hdtvlogo) {
-                                    newItem.url = imageUrl.hdtvlogo[0].url;
-                                } else if (imageUrl.status === 'error') {
-                                    newItem.url = 'https://vignette.wikia.nocookie.net/citrus/images/6/60/No_Image_Available.png/revision/latest?cb=20170129011325';
-                                } else {
-                                    newItem.url = 'https://cs.pikabu.ru/post_img/big/2013/11/22/5/1385100645_1399473065.jpg';
-                                }
-                                content.splice(index, 1, newItem);
-                                i++;
-                                if (i === content.length){ // почему если обновлять много раз, то перерендерить реакт только 1 раз может (первый) и если убрать этот if то отобразиться только одна картинка
+
+                               // почему если обновлять много раз, то перерендерить реакт только 1 раз может (первый) и если убрать этот if то отобразиться только одна картинка
+                                    console.log('red2')
                                     dispatch(setNewContent(content))
-                                    console.log(content)
                                     dispatch(isLoading(false));
-                                }
+
                             });
-                        });
-                });
-            });
-    }
+                        }
+
+
 }
 
 export const urlMaker = (url, category) => {
