@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { pageChange } from './actions/pageChange'
 import { searchByValue } from './actions/searchByValue'
-import { sortByValue } from './actions/sortByValue'
 import { clearPage } from './actions/clearPage'
 
 class App extends Component{
@@ -51,7 +50,6 @@ class App extends Component{
             showsTemplate = <th width="50%">Error. Shows is not present.</th>
         }
 
-
         return (
             <div className="text-center container">
                 <div className="row">
@@ -71,11 +69,11 @@ class App extends Component{
                         <tbody>
                         <tr>
                             <th width="5%">№</th>
-                            <th width="30%"><a onClick={()=>sort('SORT_BY_NAME')}>Name of the show +</a></th>
-                            <th width="8%"><a onClick={()=>sort('SORT_BY_SEASON')}>Season +</a></th>
+                            <th width="30%">Name of the show</th>
+                            <th width="8%">Season</th>
                             <th width="4%">Number</th>
                             <th width="30%">Title</th>
-                            <th width="7%"><a onClick={()=>sort('SORT_BY_YEAR')}>Year +</a></th>
+                            <th width="7%">Year</th>
                         </tr>
                         {showsTemplate}
                         </tbody>
@@ -85,7 +83,7 @@ class App extends Component{
                     <p className="total">Number of TV shows: <span>{this.props.shows.length}</span></p>
                 </div>
             </div>
-        )}
+)}
 }
 
 App.propTypes = {
@@ -95,14 +93,17 @@ App.propTypes = {
 const mapStateToProps = store => {
     console.log(store)
     return {
-        shows: store.root.shows,
-        shows_pagination: store.root.shows_pagination,
-        i: store.root.i
+        page: store.other.page,
+        loading: store.other.loading,
+        nothingFound: store.other.nothingFound,
+        shows_pagination: store.main.content,
+        query: store.other.query,
+        category: store.other.category,
+        maxPage: store.other.maxPage
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    sort: SortType => dispatch(sortByValue(SortType)),
     page: Type => dispatch(pageChange(Type)),
     search: Phrase => dispatch(searchByValue(Phrase)),
     clear: () => dispatch(clearPage())
