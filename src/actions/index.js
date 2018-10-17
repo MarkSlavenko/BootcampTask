@@ -75,7 +75,6 @@ export const setSort = sort => {
 }
 
 export const loadContent = (url) => {
-    console.log('red')
     return (dispatch, getState) => {
         dispatch(isLoading(true));
         if (getState().otherContent) dispatch(nothingFound(false))
@@ -106,15 +105,13 @@ export const loadContent = (url) => {
                 });
             })
             .then((data) => { // загрузка картинок
-                const content = [...data];
+    const content = [...data];
 
-                               // почему если обновлять много раз, то перерендерить реакт только 1 раз может (первый) и если убрать этот if то отобразиться только одна картинка
-                                    console.log('red2')
-                                    dispatch(setNewContent(content))
-                                    dispatch(isLoading(false));
+    dispatch(setNewContent(content))
+    dispatch(isLoading(false));
 
-                            });
-                        }
+});
+}
 
 
 }

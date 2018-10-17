@@ -57,7 +57,7 @@ export const initialState = {
     },
     query: '',
     page: 1,
-    maxPage: 10,
+    maxPage: 'Calculation',
 }
 
 
