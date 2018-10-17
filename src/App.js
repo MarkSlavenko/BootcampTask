@@ -11,7 +11,7 @@ import {Loading} from "./components/Loading"
 import {
     urlMaker,
     setQuery,
-    changePage
+    changePage,
 } from './actions/index.js'
 
 class App extends Component{
@@ -90,8 +90,8 @@ class App extends Component{
                 </table>
                     : <Loading/> }
 
-                    <button className={'prev btn ' + (this.props.page>1 ? '' : 'disabled')}><span>&larr;</span></button>
-                    <button  className={'next btn '}><span>&rarr;</span></button>
+                    <button onClick={page > 1 ? ()=> this.props.onChangePage(page-1) : undefined} className={'prev btn ' + (page > 1 ? '' : 'disabled')}><span>&larr;</span></button>
+                    <button onClick={page>=this.props.maxPage ? undefined :()=>this.props.onChangePage(page+1)} className={'next btn ' + (page>=this.props.maxPage ? 'disabled' : '')}><span>&rarr;</span></button>
                     {<p className="total">Current page: <span>{page}</span></p>}
                     {<p className="total">Number of pages: <span>{this.props.maxPage}</span></p>}
                 </div>
@@ -125,7 +125,7 @@ function mapDispatchToProps (dispatch) {
         },
         onChangePage: (page) => {
             dispatch(changePage(page))
-        }
+        },
     })
 }
 

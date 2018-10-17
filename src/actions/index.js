@@ -77,7 +77,7 @@ export const setSort = sort => {
 export const loadContent = (url) => {
     return (dispatch, getState) => {
         dispatch(isLoading(true));
-        if (getState().otherContent) dispatch(nothingFound(false))
+        if (getState().other.nothingFound) dispatch(nothingFound(false))
         fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
@@ -131,11 +131,12 @@ export const urlMaker = (url, category) => {
 export const changePage = (page) => {
     return (dispatch, getState) => {
         dispatch(setPage(page));
-        console.log(`${getState().otherContent.url}&page=${page}`);
-        dispatch(loadContent(`${getState().otherContent.url}&page=${page}`))
-
+        console.log(`${getState().other.url}&page=${page}`);
+        dispatch(loadContent(`${getState().other.url}&page=${page}`))
     }
 }
+
+
 
 export const sortFun = (selector) => {
     return (dispatch, getState) => {
