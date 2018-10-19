@@ -7,8 +7,6 @@ import {
     SET_NEW_CONTENT,
     SET_URL,
     SET_CATEGORY,
-    SET_QUERY,
-    SET_SORT
 } from '../constants/index.js';
 
 export const setPage = page => {
@@ -60,19 +58,7 @@ export const setCategory = category => {
     })
 }
 
-export const setQuery = query => {
-    return({
-        type: SET_QUERY,
-        query
-    })
-}
 
-export const setSort = sort => {
-    return ({
-        type: SET_SORT,
-        sort
-    })
-}
 
 export const loadContent = (url) => {
     return (dispatch, getState) => {
@@ -118,7 +104,6 @@ export const loadContent = (url) => {
 
 export const urlMaker = (url, category) => {
     return (dispatch) => {
-        dispatch(setQuery(''))
         dispatch(setCategory(category));
         dispatch(setPage(1));
         dispatch(setUrl(url));
@@ -136,46 +121,3 @@ export const changePage = (page) => {
     }
 }
 
-
-
-export const sortFun = (selector) => {
-    return (dispatch, getState) => {
-        const newContent = [...getState().mainContent.content];
-        let newSort = {};
-        if (getState().otherContent.sort.direction === 'up' && selector === getState().otherContent.sort.sortOn) {
-            newSort = {
-                sortOn: selector,
-                direction: 'down',
-            };
-            if (selector === 'year') {
-                newContent.sort((a, b) => {
-                    if (a.year > b.year) return 1;
-                    if (a.year < b.year) return -1;
-                });
-            } else if (selector === 'rating') {
-                newContent.sort((a, b) => {
-                    if (a.rating > b.rating) return 1;
-                    if (a.rating < b.rating) return -1;
-                });
-            }
-        } else {
-            if (selector === 'year') {
-                newContent.sort((a, b) => {
-                    if (a.year > b.year) return -1;
-                    if (a.year < b.year) return 1;
-                });
-            } else if (selector === 'rating') {
-                newContent.sort((a, b) => {
-                    if (a.rating > b.rating) return -1;
-                    if (a.rating < b.rating) return 1;
-                });
-            }
-            newSort = {
-                sortOn: selector,
-                direction: 'up',
-            };
-        }
-        dispatch(setSort(newSort));
-        dispatch(setNewContent(newContent));
-    }
-}

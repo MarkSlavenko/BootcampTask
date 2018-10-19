@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import './App.css'
 import {Shows} from "./components/Shows/Shows";
+import {Search} from "./components/Search";
+import {Loading} from "./components/Loading"
 import shortid from 'shortid'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
-import {Loading} from "./components/Loading"
-// import { pageChange } from './actions/pageChange'
-// import { searchByValue } from './actions/searchByValue'
-// import { clearPage } from './actions/clearPage'
+
 import {
     urlMaker,
-    setQuery,
     changePage,
 } from './actions/index.js'
 
@@ -20,23 +18,23 @@ class App extends Component{
 
     constructor(props) {
         super(props)
-        this.input = React.createRef()
-        this.state = {
-            visibleBtn : false,
-        }
+        // this.input = React.createRef()
+        // this.state = {
+        //     visibleBtn : false,
+        // }
     }
 
 
-    searchButton = () => {
-    this.props.search(this.input.current.value)
-       if (this.input.current.value !== '') this.setState({visibleBtn:true})
-    }
-
-    clearButton = () => {
-        this.props.clear()
-        this.input.current.value = ''
-        this.setState({visibleBtn:false})
-    }
+    // searchButton = () => {
+    // this.props.search(this.input.current.value)
+    //    if (this.input.current.value !== '') this.setState({visibleBtn:true})
+    // }
+    //
+    // clearButton = () => {
+    //     this.props.clear()
+    //     this.input.current.value = ''
+    //     this.setState({visibleBtn:false})
+    // }
 
     componentDidMount() {
         this.props.urlMaker('https://api.trakt.tv/shows/popular?extended=full&limit=50&genres=action', 'Action');
@@ -45,7 +43,6 @@ class App extends Component{
     render() {
         console.log(this.props)
         const shows_pagination = this.props.shows_pagination
-        const sort = this.props.sort
         const page = this.props.page
         const i = this.props.page
         let showsTemplate
@@ -64,17 +61,7 @@ class App extends Component{
             <div className="text-center container">
                 <div className="row">
                     <h1>Table</h1>
-
-                    <input
-                        className='test-input'
-                        defaultValue=''
-                        placeholder='Enter value'
-                        ref={this.input}
-                    />
-
-                    <button className="btn btn-search" onClick={this.searchButton}>Search</button>
-                    {this.state.visibleBtn && <button className="btn btn-search" onClick={this.clearButton}>Clear</button>}
-
+                    <Search url={"https://api.trakt.tv/search/show?extended=full&limit=50&query="} func_search={this.props.urlMaker}/>
                     {!this.props.loading ? <table className="text-center" width="100%" border="2" cellPadding="4" cellSpacing="0" cols="6">
                     <tbody>
                     <tr>
@@ -109,7 +96,6 @@ const mapStateToProps = store => {
         loading: store.other.loading,
         nothingFound: store.other.nothingFound,
         shows_pagination: store.main.content,
-        query: store.other.query,
         category: store.other.category,
         maxPage: store.other.maxPage
     }
@@ -119,9 +105,6 @@ function mapDispatchToProps (dispatch) {
     return ({
         urlMaker: (url, category) => {
             dispatch(urlMaker(url, category))
-        },
-        onChangeQuery: (query) => {
-            dispatch(setQuery(query))
         },
         onChangePage: (page) => {
             dispatch(changePage(page))

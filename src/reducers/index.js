@@ -8,8 +8,6 @@ import {
     SET_NEW_CONTENT,
     SET_URL,
     SET_CATEGORY,
-    SET_QUERY,
-    SET_SORT
 } from '../constants/index.js';
 
 
@@ -21,11 +19,6 @@ export const initialState = {
     nothingFound: false,
     url: '',
     category: 'Action',
-    sort: {
-        sortOn: '',
-        direction: '',
-    },
-    query: '',
     page: 1,
     maxPage: 'Calculation',
 }
@@ -58,14 +51,7 @@ export const otherContent = (state = initialState,action) => {
             return Object.assign({}, state, {
                 category: action.category
             })
-        case SET_QUERY :
-            return Object.assign({}, state, {
-                query: action.query
-            })
-        case SET_SORT :
-            return Object.assign({}, state, {
-                sort: action.sort
-            })
+
         default :
             return state
     }
