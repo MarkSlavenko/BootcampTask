@@ -13,6 +13,8 @@ const getValue = ()=> {
         text.value = '';
     }
 
+
+
 export function Search ({url, func_search}) {
     return (
         <div>
@@ -21,6 +23,11 @@ export function Search ({url, func_search}) {
                 defaultValue=''
                 placeholder='Enter value'
                 name = "InputValue"
+                onKeyPress={
+                    (target) =>{
+                    if(target && target.charCode===13)
+                    {getValue() ? func_search(`${url}${getValue()}`, 'Action') : undefined}
+                }}
             />
 
             <button className="btn btn-search" onClick={()=> getValue() ? func_search(`${url}${getValue()}`, 'Action') : undefined}>Search</button>
