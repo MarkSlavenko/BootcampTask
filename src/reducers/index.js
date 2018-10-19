@@ -25,46 +25,46 @@ export const initialState = {
 
 
 
-export const otherContent = (state = initialState,action) => {
+export const otherContent = (store = initialState, action) => {
     switch(action.type) {
         case CHANGE_PAGE :
-            return Object.assign({}, state, {
+            return {...store,
                 page: action.page
-            })
+            }
         case SET_MAX_PAGE :
-            return Object.assign({}, state, {
+            return {...store,
                 maxPage: action.maxPage
-            })
+            }
         case SET_LOADING :
-            return Object.assign({}, state, {
+            return {...store,
                 loading: action.loading
-            })
+            }
         case IS_NOTHING_FOUND :
-            return Object.assign({}, state, {
+            return {...store,
                 nothingFound: action.nothingFound
-            })
+            }
         case SET_URL :
-            return Object.assign({}, state, {
+            return {...store,
                 url: action.url
-            })
+            }
         case SET_CATEGORY :
-            return Object.assign({}, state, {
+            return {...store,
                 category: action.category
-            })
+            }
 
         default :
-            return state
+            return store
     }
 }
 
-export const mainContent = (state = initialState,action) => {
+export const mainContent = (store = initialState, action) => {
     switch (action.type) {
         case SET_NEW_CONTENT :
-            return Object.assign({}, state, {
+            return {...store,
                 content: action.content
-            })
+            }
         default :
-            return state
+            return store
     }
 }
 

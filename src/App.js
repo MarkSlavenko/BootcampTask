@@ -14,27 +14,9 @@ import {
 
 class App extends Component{
 
-
-
     constructor(props) {
         super(props)
-        // this.input = React.createRef()
-        // this.state = {
-        //     visibleBtn : false,
-        // }
     }
-
-
-    // searchButton = () => {
-    // this.props.search(this.input.current.value)
-    //    if (this.input.current.value !== '') this.setState({visibleBtn:true})
-    // }
-    //
-    // clearButton = () => {
-    //     this.props.clear()
-    //     this.input.current.value = ''
-    //     this.setState({visibleBtn:false})
-    // }
 
     componentDidMount() {
         this.props.urlMaker('https://api.trakt.tv/shows/popular?extended=full&limit=50&genres=action', 'Action');
