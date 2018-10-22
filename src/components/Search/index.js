@@ -17,7 +17,7 @@ const getValue = ()=> {
 
 export function Search ({url, func_search}) {
     return (
-        <div>
+        <div className="col-lg-6">
             <input
                 className='test-input'
                 defaultValue=''
@@ -26,11 +26,11 @@ export function Search ({url, func_search}) {
                 onKeyPress={
                     (target) =>{
                     if(target && target.charCode===13)
-                    {getValue() ? func_search(`${url}${getValue()}`, 'Action') : undefined}
+                    {getValue() ? func_search(`${url}${getValue()}`) : undefined}
                 }}
             />
 
-            <button className="btn btn-search" onClick={()=> getValue() ? func_search(`${url}${getValue()}`, 'Action') : undefined}>Search</button>
+            <button className="btn btn-search" onClick={()=> getValue() ? func_search(`${url}${getValue()}`) : undefined}>Search</button>
             {getValue() ? <button className="btn btn-search" onClick={()=>{clearValue()}}>Clear</button> : undefined}
         </div>
     )

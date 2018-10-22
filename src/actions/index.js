@@ -1,12 +1,11 @@
 /* eslint-disable */
 import {
     CHANGE_PAGE,
-    SET_MAX_PAGE,
+    SET_TOTAL_PAGES,
     SET_LOADING,
-    IS_NOTHING_FOUND,
-    SET_NEW_CONTENT,
+    IS_EMPTY,
+    SET_NEW_SHOWS,
     SET_URL,
-    SET_CATEGORY,
 } from '../constants/index.js';
 
 export const setPage = page => {
@@ -16,10 +15,10 @@ export const setPage = page => {
     })
 }
 
-export const setMaxPage = maxPage => {
+export const setMaxPage = totalPages => {
     return ({
-        type: SET_MAX_PAGE,
-        maxPage
+        type: SET_TOTAL_PAGES,
+        totalPages
     })
 }
 
@@ -30,17 +29,17 @@ export const isLoading = loading => {
     })
 }
 
-export const nothingFound = nothingFound => {
+export const nothingFound = isEmpty => {
     return ({
-        type: IS_NOTHING_FOUND,
-        nothingFound
+        type: IS_EMPTY,
+        isEmpty
     })
 }
 
-export const setNewContent = content => {
+export const setNewContent = shows => {
     return({
-        type: SET_NEW_CONTENT,
-        content
+        type: SET_NEW_SHOWS,
+        shows
     })
 }
 
@@ -51,19 +50,13 @@ export const setUrl = url => {
     })
 }
 
-export const setCategory = category => {
-    return({
-        type: SET_CATEGORY,
-        category
-    })
-}
 
 
 
 export const loadContent = (url) => {
     return (dispatch, getState) => {
         dispatch(isLoading(true));
-        if (getState().other.nothingFound) dispatch(nothingFound(false))
+        if (getState().query.isEmpty) dispatch(nothingFound(false))
         fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
@@ -73,8 +66,8 @@ export const loadContent = (url) => {
         })
             .then((response) => {
                 dispatch(setMaxPage(response.headers.get('X-Pagination-Page-Count')))
-                return response.json().then((arr) => { // загрузка контента
-                    if (arr.length === 0) { // если ничего не найдено
+                return response.json().then((arr) => {
+                    if (arr.length === 0) {
                         dispatch(isLoading(false));
                         dispatch(nothingFound(true));
                         return []
@@ -90,7 +83,7 @@ export const loadContent = (url) => {
                     return newArrContent;
                 });
             })
-            .then((data) => { // загрузка картинок
+            .then((data) => {
     const content = [...data];
 
     dispatch(setNewContent(content))
@@ -102,9 +95,8 @@ export const loadContent = (url) => {
 
 }
 
-export const urlMaker = (url, category) => {
+export const urlMaker = (url) => {
     return (dispatch) => {
-        dispatch(setCategory(category));
         dispatch(setPage(1));
         dispatch(setUrl(url));
         const fullUrl = `${url}&page=1`;
@@ -116,8 +108,8 @@ export const urlMaker = (url, category) => {
 export const changePage = (page) => {
     return (dispatch, getState) => {
         dispatch(setPage(page));
-        console.log(`${getState().other.url}&page=${page}`);
-        dispatch(loadContent(`${getState().other.url}&page=${page}`))
+        console.log(`${getState().query.url}&page=${page}`);
+        dispatch(loadContent(`${getState().query.url}&page=${page}`))
     }
 }
 

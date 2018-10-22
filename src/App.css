@@ -41,8 +41,8 @@ th{
 }
 
 table {
-  margin-bottom: 40px;
-  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-top: 55px;
 }
 
 th, th a {
@@ -86,9 +86,11 @@ a:hover {
 }
 
 
+
 .total {
   font-size: 19px;
 }
+
 
 .total span {
   font-weight: bold;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css'
-import {Shows} from "./components/Shows/Shows";
+import {Index} from "./components/Shows/index";
 import {Search} from "./components/Search";
 import {Loading} from "./components/Loading"
+import {Genres} from "./components/Genres"
 import shortid from 'shortid'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
@@ -19,7 +20,7 @@ class App extends Component{
     }
 
     componentDidMount() {
-        this.props.urlMaker('https://api.trakt.tv/shows/popular?extended=full&limit=50&genres=action', 'Action');
+        this.props.urlMaker('https://api.trakt.tv/shows/popular?extended=full&limit=50&genres=action');
     }
 
     render() {
@@ -31,7 +32,7 @@ class App extends Component{
         if (shows_pagination.length) {
             showsTemplate = shows_pagination.map((item, b) => {
 
-                return <Shows key={shortid.generate()}
+                return <Index key={shortid.generate()}
                               id={i*50+b-49} name={item.title}
                               rating={item.rating}
                               status={item.status}
@@ -43,8 +44,18 @@ class App extends Component{
             <div className="text-center container">
                 <div className="row">
                     <h1>Table</h1>
-                    <Search url={"https://api.trakt.tv/search/show?extended=full&limit=50&query="} func_search={this.props.urlMaker}/>
-                    {!this.props.loading ? <table className="text-center" width="100%" border="2" cellPadding="4" cellSpacing="0" cols="6">
+                    <Search
+                        url={"https://api.trakt.tv/search/show?extended=full&limit=50&query="}
+                        func_search={this.props.urlMaker}
+                    />
+
+                    <Genres
+                    url ={'https://api.trakt.tv/shows/popular?extended=full&limit=50&genres='}
+                    func={this.props.urlMaker}
+                    genres={['action', 'adventure', 'animation', 'anime', 'crime', 'fantasy', 'science-fiction', 'superhero']}
+                    />
+
+                    {!this.props.isEmpty ?  !this.props.loading ? <table className="text-center" width="100%" border="2" cellPadding="4" cellSpacing="0" cols="6">
                     <tbody>
                     <tr>
                         <th width="5%">№</th>
@@ -57,12 +68,12 @@ class App extends Component{
                     {showsTemplate}
                     </tbody>
                 </table>
-                    : <Loading/> }
+                    : <Loading/> : <h1>Nothing Found</h1>}
 
                     <button onClick={page > 1 ? ()=> this.props.onChangePage(page-1) : undefined} className={'prev btn ' + (page > 1 ? '' : 'disabled')}><span>&larr;</span></button>
-                    <button onClick={page>=this.props.maxPage ? undefined :()=>this.props.onChangePage(page+1)} className={'next btn ' + (page>=this.props.maxPage ? 'disabled' : '')}><span>&rarr;</span></button>
-                    {<p className="total">Current page: <span>{page}</span></p>}
-                    {<p className="total">Number of pages: <span>{this.props.maxPage}</span></p>}
+                    <button onClick={page>=this.props.totalPages ? undefined :()=>this.props.onChangePage(page+1)} className={'next btn ' + (page>=this.props.maxPage ? 'disabled' : '')}><span>&rarr;</span></button>
+                    <br/>{<p className="total">Current page: <span>{page}</span></p>}
+                    {<p className="total">Number of pages: <span>{this.props.totalPages}</span></p>}
                 </div>
             </div>
 )}
@@ -74,19 +85,18 @@ class App extends Component{
 
 const mapStateToProps = store => {
     return {
-        page: store.other.page,
-        loading: store.other.loading,
-        nothingFound: store.other.nothingFound,
-        shows_pagination: store.main.content,
-        category: store.other.category,
-        maxPage: store.other.maxPage
+        page: store.query.page,
+        loading: store.query.loading,
+        isEmpty: store.query.isEmpty,
+        shows_pagination: store.content.shows,
+        totalPages: store.query.totalPages
     }
 }
 
 function mapDispatchToProps (dispatch) {
     return ({
-        urlMaker: (url, category) => {
-            dispatch(urlMaker(url, category))
+        urlMaker: (url) => {
+            dispatch(urlMaker(url))
         },
         onChangePage: (page) => {
             dispatch(changePage(page))
