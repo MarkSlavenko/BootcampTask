@@ -75,7 +75,8 @@ class App extends Component {
 
                             {<p className="total">Current page: <span>{page}</span></p>}
                             {<p className="total">Number of pages: <span>{this.props.totalPages}</span></p>}
-                        </div> :
+                        </div>
+                        :
                         <div className="col-lg-12"><h1>Nothing Found</h1></div>}
                     <button onClick={page > 1 ? () => this.props.onChangePage(page - 1) : undefined}
                             className={'prev btn ' + (page > 1 ? '' : 'disabled')}><span>&larr;</span>
