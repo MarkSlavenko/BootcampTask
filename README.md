@@ -1,4 +1,4 @@
-#Bootcamp task v4
+#Bootcamp task
 ```
 ## npm install && npm start
 ```

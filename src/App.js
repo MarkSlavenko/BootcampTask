@@ -56,25 +56,26 @@ class App extends Component {
                     />
 
                     {!this.props.isEmpty ? !this.props.loading ?
-                        <table className="text-center" width="100%" border="2" cellPadding="4" cellSpacing="0" cols="6">
-                            <tbody>
-                            <tr>
-                                <th width="5%">№</th>
-                                <th width="30%">Name of the show</th>
-                                <th width="8%">Rating</th>
-                                <th width="6%">Status</th>
-                                <th width="30%">Overview</th>
-                                <th width="7%">Year</th>
-                            </tr>
-                            {showsTemplate}
-                            </tbody>
-                        </table>
+                        <div>
+                            <table className="text-center" width="100%" border="2" cellPadding="4" cellSpacing="0" cols="6">
+                                <tbody>
+                                <tr>
+                                    <th width="5%">№</th>
+                                    <th width="30%">Name of the show</th>
+                                    <th width="8%">Rating</th>
+                                    <th width="6%">Status</th>
+                                    <th width="30%">Overview</th>
+                                    <th width="7%">Year</th>
+                                </tr>
+                                {showsTemplate}
+                                </tbody>
+                            </table>
+                            {<p className="total">Current page: <span>{page}</span></p>}
+                            {<p className="total">Number of pages: <span>{this.props.totalPages}</span></p>}
+                        </div>
                         :
                         <div className="col-lg-12">
                             <Loading/>
-
-                            {<p className="total">Current page: <span>{page}</span></p>}
-                            {<p className="total">Number of pages: <span>{this.props.totalPages}</span></p>}
                         </div>
                         :
                         <div className="col-lg-12"><h1>Nothing Found</h1></div>}
